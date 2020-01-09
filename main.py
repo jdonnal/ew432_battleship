@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import sys
 
+import engine
 import players
 import sprites
 import colors
@@ -48,10 +49,23 @@ def main():
     utilities.draw_ships(my_board, me.state.all_ships())
     my_board.draw()
 
+    them = players.Computer()
     their_board.initialize()
     their_board.draw()
 
     pygame.display.update()
+
+    # Create an engine to run the game
+    game = engine.Engine(me, my_board, them, their_board)
+
+    # Play battleship!
+    winner = game.play()
+
+    # Display the winner in a message box
+    if winner == me:
+        _display_message(screen, "You Win!")
+    elif winner == them:
+        _display_message(screen, "You Lose!")
 
     # wait until the user closes the game
     while True:

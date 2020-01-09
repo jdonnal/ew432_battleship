@@ -56,6 +56,29 @@ class PlayerState:
                 print("")
             print("=" * 10)
 
+    def add_guess(self, guess):
+        for ship in self._ships:
+            if ship.is_hit(guess):
+                self._hits.append(guess)
+                self._hit = True
+                return
+        self._misses.append(guess)
+        self._hit = False
+
+    def is_hit(self) -> bool:
+        return self._hit
+
+    def all_sunk(self) -> bool:
+        # --------- BEGIN YOUR CODE ----------
+
+        # return True if all of the ships are sunk
+        # return False otherwise
+        return False  # <-- remove this!
+
+        # --------- END YOUR CODE ----------
+
     def all_ships(self):
         return self._ships
 
+    def sunk_ships(self):
+        return [ship for ship in self._ships if ship.is_sunk()]

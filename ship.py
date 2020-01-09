@@ -1,5 +1,3 @@
-
-
 class Ship:
 
     def __init__(self, length: int, row: int,
@@ -29,4 +27,22 @@ class Ship:
         self.col = col
         self.is_vertical = is_vertical
 
+        # keep track of which parts of the ship are hit
+        self._hits = []
 
+    def is_hit(self, guess):
+        # ignore duplicate guesses
+        if guess in self._hits:
+            return True
+
+        # --------- BEGIN YOUR CODE ----------
+
+        # check if the guess corresponds to part of the ship
+        # if so add the guess to _hits and return True
+        # otherwise return False
+
+        return False  # <-- remove this!
+        # --------- END YOUR CODE ----------
+
+    def is_sunk(self):
+        return len(self._hits) == self.length
