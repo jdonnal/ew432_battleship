@@ -1,7 +1,9 @@
 import pygame
 from pygame.locals import *
 import sys
+import argparse
 
+import comms
 import engine
 import players
 import sprites
@@ -44,19 +46,42 @@ def main():
 
     # --------- END YOUR CODE ----------
 
+    # parse command line arguments
+    parser = argparse.ArgumentParser("Battleship Simulator")
+    parser.add_argument("--type", "-t", choices=['cpu', 'serial-server', 'serial-client'], default='cpu')
+    parser.add_argument("--interface", "-i", help="serial device")
+    args = parser.parse_args()
+
+    # determine the type of opponent
+    if args.type == 'cpu':
+        them = players.Computer()
+    elif args.type == 'serial-server':
+        (priority, file) = comms.host_serial_server(args.interface)
+        them = players.Remote(file, priority=priority)
+    elif args.type == 'serial-client':
+        (priority, file) = comms.connect_serial_client(args.interface)
+        them = players.Remote(file, priority=priority)
+    else:
+        print("Invalid player type")
+        return
+
     me = players.Human()
     my_board.initialize()
     utilities.draw_ships(my_board, me.state.all_ships())
     my_board.draw()
 
-    them = players.Computer()
     their_board.initialize()
     their_board.draw()
 
     pygame.display.update()
 
     # Create an engine to run the game
-    game = engine.Engine(me, my_board, them, their_board)
+    if me.priority > them.priority:
+        # I go first
+        game = engine.Engine(me, my_board, them, their_board)
+    else:
+        # They go first
+        game = engine.Engine(them, their_board, me, my_board)
 
     # Play battleship!
     winner = game.play()

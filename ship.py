@@ -1,7 +1,10 @@
+from typing import Dict, Optional, List
+
 class Ship:
 
     def __init__(self, length: int, row: int,
-                 col: int, is_vertical: bool):
+                 col: int, is_vertical: bool,
+                 hits: Optional[List] = None):
         """ Ships are specified by their length, the (row,col)
         coordinate of the bow, and whether they are vertical or
         horizontal. Two examples are illustrated on the board below:
@@ -28,7 +31,11 @@ class Ship:
         self.is_vertical = is_vertical
 
         # keep track of which parts of the ship are hit
-        self._hits = []
+        # the hits parameter is provided when creating a ship with from_dict (see below)
+        if hits is None:
+            self._hits = []
+        else:
+            self._hits = hits
 
     def is_hit(self, guess):
         # ignore duplicate guesses
@@ -46,3 +53,21 @@ class Ship:
 
     def is_sunk(self):
         return len(self._hits) == self.length
+
+    def to_dict(self) -> Dict:
+        # --------- BEGIN YOUR CODE ----------
+        # populate data with the following keys based on our attributes:
+        # 'length', 'row', 'col', 'is_vertical', 'hits'
+
+        return {}  # <-- replace with your code
+        # --------- END YOUR CODE ----------
+
+
+def from_dict(data: Dict):
+    # --------- BEGIN YOUR CODE ----------
+
+    # create a Ship based off the data provided, make sure to include the hits!
+
+    pass  # <-- remove this!
+
+    # --------- END YOUR CODE ----------

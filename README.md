@@ -51,3 +51,21 @@ your computer. Code is required in the following locations:
 |``utilities.py``    | ``draw_misses:35``| add miss sprites to a board    |
 |``player_state.py`` | ``all_sunk:72``   | determine if a player has lost |
 |``ship.py``         | ``is_hit:38``     | determine if a ship is hit     |
+
+Lab 4: Playing Local Games
+--------------------------
+By the end of this lab you should be able to play a game of battleship against a local opponent
+with a USB serial connection. Code is required in the following locations:
+
+| File Name          | Function:Line                | Description                              |
+|--------------------|------------------------------|------------------------------------------|
+|``remote.py``       | ``get_guess:18``             | get a guess from another computer        |
+|``remote.py``       | ``send_guess:31``            | send a guess to another computer         |
+|``remote.py``       | ``get_state:44``             | get a PlayerState from another computer  |
+|``remote.py``       | ``send_state:65``            | send a PlayerState to another computer   |
+|``comms.py``        | ``connect_serial_client:44`` | connect to an existing battleship server |
+|``player_state.py`` | ``to_dict:106``              | encode PlayerState as a dictionary       |
+|``player_state.py`` | ``from_dict:119``            | create PlayerState from a dictionary     |
+|``player_state.py`` | ``all_sunk:72``              | update logic to handle remote players    |
+|``ship.py``         | ``to_dict:58``               | encode Ship as a dictionary              |
+|``ship.py``         | ``from_dict:67``             | create a Ship from a dictionary          |

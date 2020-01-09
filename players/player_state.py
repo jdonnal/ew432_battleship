@@ -1,7 +1,8 @@
 from random import randint
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Dict
 
 from ship import Ship
+from ship import from_dict as ship_from_dict
 
 SHIP_TYPES = [2, 3, 3, 4, 5]
 
@@ -69,6 +70,12 @@ class PlayerState:
         return self._hit
 
     def all_sunk(self) -> bool:
+        # NOTE: Modify the logic below to check if BOTH
+        #   1.) All of the ships are present in _ships
+        #   2.) All of the ships in _ships are sunk
+        # Remote players only send their sunk ships which means it is not sufficient
+        # to check if all the Ship objects in _ships are sunk
+
         # --------- BEGIN YOUR CODE ----------
 
         # return True if all of the ships are sunk
@@ -82,3 +89,43 @@ class PlayerState:
 
     def sunk_ships(self):
         return [ship for ship in self._ships if ship.is_sunk()]
+
+    def update(self, new_state: 'PlayerState'):
+        # update our attributes based on new_state
+        # new_state is received from a remote computer
+
+        # add any newly sunken ships
+        self._ships = new_state._ships
+
+        # whether or not the last guess was a hit
+        self._hit = new_state._hit
+
+    def to_dict(self, reveal=False) -> Dict:
+        # if reveal is True, encode all ships
+        if reveal:
+            ships = self._ships
+        # otherwise only encode the sunk ships
+        else:
+            ships = self.sunk_ships()
+        data = {}
+
+        # --------- BEGIN YOUR CODE ----------
+        # populate data with the following keys:
+
+        # 'ships': an array of ships encoded as dicts
+
+        # 'hit': the value of _hit
+
+        # --------- END YOUR CODE ----------
+
+        return data
+
+
+def from_dict(data: Dict) -> PlayerState:
+    state = PlayerState()
+    # --------- BEGIN YOUR CODE ----------
+
+    # set the _hit and _ships attributes based on the provided data
+
+    # --------- END YOUR CODE ----------
+    return state
