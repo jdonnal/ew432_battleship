@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, BinaryIO
 from random import randint
 import serial
 import time
@@ -50,4 +50,39 @@ def connect_serial_client(port) -> Tuple[int, serial.Serial]:
     # acknowledge the synchronize message
 
     return 3, None  # <-- replace None with the Serial object
+    # --------- END YOUR CODE ----------
+
+
+def host_tcp_server(port) -> Tuple[int, BinaryIO]:
+    """
+    Host a battleship server on the specified port on all interfaces (0.0.0.0)
+    Uses priority 0
+    """
+    # --------- BEGIN YOUR CODE ----------
+
+    # create Socket object
+
+    # bind to all interfaces (IP address = 0.0.0.0) on the specified port
+
+    # wait for a connection from a client
+
+    # return the connected socket
+    return 0, None
+    # --------- END YOUR CODE ----------
+
+
+def connect_tcp_client(server_address) -> Tuple[int, BinaryIO]:
+    """
+    Connect to a battleship server specified by ip_address:port
+    Uses priority 3
+    """
+    # --------- BEGIN YOUR CODE ----------
+
+    # create a Socket object
+
+    # parse server_address into ip_address and port
+    # note the ip_address is a string and the port is an int
+
+    # connect the socket to the server
+    return 3, None
     # --------- END YOUR CODE ----------

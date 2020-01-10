@@ -41,9 +41,20 @@ class Engine:
 
             # Did Player1 win?
             if player2_state.all_sunk():
+                # share all of Player1's ships with Player2 (both sunk and unsunk)
+                # this way if Player2 is remote, they can verify that Player1 did not cheat
+                player1_solved_state = self.player1.get_state()
+                self.player2.send_state(player1_solved_state, reveal=True)
+                # verify for ourselves that Player1 did not cheat
+                if not player1_solved_state.is_valid():
+                    print("Player 1 cheated!")
+                else:
+                    print("Player1 played a fair game")
                 return self.player1
 
             # ==== Player2's turn ====
+
+            # NOTE: Following the pattern above, implement cheat detection for Player2
 
             # --------- BEGIN YOUR CODE ----------
 

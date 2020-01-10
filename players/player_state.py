@@ -1,5 +1,7 @@
 from random import randint
 from typing import List, Optional, Tuple, Dict
+import json
+import hashlib
 
 from ship import Ship
 from ship import from_dict as ship_from_dict
@@ -42,6 +44,11 @@ class PlayerState:
             # --------- BEGIN YOUR CODE ----------
             pass  # <-- remove this!
             # --------- END YOUR CODE ----------
+
+        # compute the hash of the ships, used for cheat detection
+        ship_str = json.dumps([ship.to_dict() for ship in self._ships])
+        ship_bytes = ship_str.encode('ascii')
+        self._hash = hashlib.sha256(ship_bytes).hexdigest()
 
         """
         Print the board as text, useful for debugging
@@ -100,6 +107,8 @@ class PlayerState:
         # whether or not the last guess was a hit
         self._hit = new_state._hit
 
+        # NOTE: ignore the hash, it cannot be trusted!
+
     def to_dict(self, reveal=False) -> Dict:
         # if reveal is True, encode all ships
         if reveal:
@@ -108,6 +117,8 @@ class PlayerState:
         else:
             ships = self.sunk_ships()
         data = {}
+
+        # NOTE: Add 'hash' to the data dictionary
 
         # --------- BEGIN YOUR CODE ----------
         # populate data with the following keys:
@@ -120,9 +131,29 @@ class PlayerState:
 
         return data
 
+    def is_valid(self) -> bool:
+        # --------- BEGIN YOUR CODE ----------
+
+        board_matrix: List[List[Optional[Ship]]] = [[None] * 10 for _ in range(10)]
+
+        # If any of the following checks fail, print a message and return False
+
+        # 1.) Make sure the ships are the right types
+
+        # 2.) Make sure ships are in valid locations
+
+        # 3.) Make sure the hits and misses are correct
+
+        # 4.) Validate board signature (make sure ships have not moved)
+
+        return True
+        # --------- END YOUR CODE ----------
 
 def from_dict(data: Dict) -> PlayerState:
     state = PlayerState()
+
+    # NOTE: Set the _hash attribute based on the provided data
+
     # --------- BEGIN YOUR CODE ----------
 
     # set the _hit and _ships attributes based on the provided data

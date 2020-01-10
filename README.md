@@ -69,3 +69,18 @@ with a USB serial connection. Code is required in the following locations:
 |``player_state.py`` | ``all_sunk:72``              | update logic to handle remote players    |
 |``ship.py``         | ``to_dict:58``               | encode Ship as a dictionary              |
 |``ship.py``         | ``from_dict:67``             | create a Ship from a dictionary          |
+
+Lab 5: Playing Remote Games
+---------------------------
+By the end of this lab you should be able to play a game of battleship against a remote opponent
+over a network connection. You should also be able to detect if your opponent cheated. Code is
+required in the following locations:
+
+| File Name          | Function:Line                | Description                              |
+|--------------------|------------------------------|------------------------------------------|
+|``engine.py``       | ``play:59``                  | add cheat detection for player2          |
+|``player_state.py`` | ``to_dict:125``              | add hash to dict encoding                |
+|``player_state.py`` | ``from_dict:155``            | set hash from dict encoding              |
+|``player_state.py`` | ``is_valid:155``             | verify PlayerState                       |
+|``comms.py``        | ``host_tcp_server:61``       | host a battleship server                 |
+|``comms.py``        | ``connect_tcp_client:79``    | connect to an existing battleship server |

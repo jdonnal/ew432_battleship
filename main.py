@@ -48,8 +48,9 @@ def main():
 
     # parse command line arguments
     parser = argparse.ArgumentParser("Battleship Simulator")
-    parser.add_argument("--type", "-t", choices=['cpu', 'serial-server', 'serial-client'], default='cpu')
-    parser.add_argument("--interface", "-i", help="serial device")
+    parser.add_argument("--type", "-t", choices=['cpu', 'serial-server', 'serial-client',
+                                                 'tcp-server', 'tcp-client'], default='cpu')
+    parser.add_argument("--interface", "-i", help="serial device, port or IP address:PORT")
     args = parser.parse_args()
 
     # determine the type of opponent
@@ -60,6 +61,12 @@ def main():
         them = players.Remote(file, priority=priority)
     elif args.type == 'serial-client':
         (priority, file) = comms.connect_serial_client(args.interface)
+        them = players.Remote(file, priority=priority)
+    elif args.type == 'tcp-server':
+        (priority, file) = comms.host_tcp_server(args.interface)
+        them = players.Remote(file, priority=priority)
+    elif args.type == 'tcp-client':
+        (priority, file) = comms.connect_tcp_client(args.interface)
         them = players.Remote(file, priority=priority)
     else:
         print("Invalid player type")
