@@ -58,6 +58,7 @@ def main():
         for event in pygame.event.get():
             if event.type == QUIT:
                 _display_message(screen, "Bye!")
+                pygame.display.update()
                 pygame.time.wait(1000)
                 pygame.quit()
                 sys.exit()
